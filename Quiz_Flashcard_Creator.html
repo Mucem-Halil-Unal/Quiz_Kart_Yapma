@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kart & Quiz Oluşturucu</title>
+  <style>
+    /* Global Dark Theme & Modern UI */
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+	  background-color: #121212;
+	  background-image:
+		repeating-linear-gradient(45deg, #1a1a1a 0, #1a1a1a 2px, #121212 2px, #121212 4px),
+		repeating-linear-gradient(-45deg, #1a1a1a 0, #1a1a1a 2px, #121212 2px, #121212 4px);
+       color: #e0e0e0;
+      padding: 20px;
+      margin: 0;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    h1 {
+      color: lightgray;
+      margin: 0 0 10px;
+	  text-align: center;
+    }
+	h2 {
+      color: lightgray;
+      margin: 0 0 10px;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+      color: #e0e0e0;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      box-sizing: border-box;
+      background-color: #1e1e1e;
+      border: 1px solid #333;
+      color: #e0e0e0;
+      border-radius: 4px;
+    }
+    button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background-color: #333;
+      color: #fff;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #555;
+    }
+    .section {
+    max-width: 600px;
+    margin: 20px auto; 
+    padding: 15px;
+    background-color: #1e1e1e;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+    border-radius: 4px;
+  }
+    .item {
+      border-bottom: 1px solid #333;
+      margin-top: 10px;
+      padding-bottom: 10px;
+    }
+    .item:last-child {
+      border-bottom: none;
+    }
+    textarea#outputCode {
+      height: 300px;
+      background-color: #1e1e1e;
+      color: #e0e0e0;
+      border: 1px solid #333;
+      border-radius: 4px;
+    }
+    /* Program generated area (remains dark) */
+    #darkModeToggle,
+    #backToMenuBtn {
+      background-color: #1e1e1e;
+      color: #e0e0e0;
+      border: 1px solid #333;
+    }
+    /* Bilgi butonları stil */
+    .info-btn {
+      margin-left: 10px;
+      padding: 8px 12px;
+      background-color: #333;
+      border-radius: 20px;
+      font-size: 14px;
+      border: none;
+      cursor: pointer;
+      color: #fff;
+      transition: background-color 0.3s;
+    }
+    .info-btn:hover {
+      background-color: #555;
+    }
+
+	input[type="file"] {
+	display: none;
+	}
+
+	.file-upload-wrapper {
+	display: inline-block;
+	position: relative;
+	}
+
+	.file-upload-label {
+	display: inline-block;
+	margin-top: 10px;
+	padding: 10px 20px;
+	background-color: #333;
+	color: #fff;
+	border-radius: 20px;
+	cursor: pointer;
+	font-size: 16px;
+	transition: background-color 0.3s;
+	}
+	.file-upload-label:hover {
+	background-color: #555;
+	}
+
+  </style>
+</head>
+<body>
+  <h1>Kart & Quiz Oluşturucu</h1>
+  
+  <!-- Program Settings -->
+  <div class="section">
+	<h2>Program Adı</h2>
+    <input type="text" id="programName" placeholder="Programa İsim Ver.">
+  </div>
+
+  <!-- Learning Cards Section -->
+  <div class="section">
+    <h2>Öğrenme Kartları Ekle</h2>
+    <label for="lcHeading">Başlık:</label>
+    <input type="text" id="lcHeading" placeholder="Başlık Ekle.">
+    
+    <label for="lcText">Metin:</label>
+    <input type="text" id="lcText" placeholder="Ana Metin Ekle.">
+    
+    <label for="lcDetail">Detay:</label>
+    <input id="lcDetail" placeholder="Detay Metni Ekle."></textarea>
+    
+    <button id="addLearningCardBtn">Öğrenme Kartını Ekle</button>
+    
+    <!-- Bulk loader for flashcards -->
+    <label for="flashcardFile">Txt Dosyasından Kart Toplu Yükle:</label>
+    <div class="file-upload-wrapper">
+		<label for="flashcardFile" class="file-upload-label">Dosya Seç</label>
+		<input type="file" id="flashcardFile">
+	  </div>	  
+    <button class="info-btn" id="flashcardInfoBtn" title="Txt formatı hakkında bilgi">Bilgi</button>
+    
+    <div id="learningCardsList"></div>
+  </div>
+
+  <!-- Quiz Questions Section -->
+  <div class="section">
+    <h2>Quiz Soruları Ekle</h2>
+    <label for="quizQ">Soru:</label>
+    <input type="text" id="quizQ" placeholder="Soru Ekle.">
+    
+    <div id="quizOptionsContainer">
+      <label>Seçenek 1:</label>
+      <input type="text" class="quizOpt" placeholder="Cevap Ekle.">
+      
+      <label>Seçenek 2:</label>
+      <input type="text" class="quizOpt" placeholder="Cevap Ekle.">
+      
+      <label>Seçenek 3:</label>
+      <input type="text" class="quizOpt" placeholder="Cevap Ekle.">
+      
+      <label>Seçenek 4:</label>
+      <input type="text" class="quizOpt" placeholder="Cevap Ekle.">
+    </div>
+    <button id="addOptionBtn">Seçenek Ekle</button>
+    
+    <label for="quizCorrect">Doğru Seçeneğin Numarası:</label>
+    <input type="number" id="quizCorrect" min="1" placeholder="Örn: 1">
+    
+    <button id="addQuizQuestionBtn">Quiz Sorusunu Ekle</button>
+    
+    <!-- Bulk loader for quizzes -->
+    <label for="quizFile">Txt Dosyasından Toplu Quiz Yükle:</label>
+    <div class="file-upload-wrapper">
+		<label for="quizFile" class="file-upload-label">Dosya Seç</label>
+		<input type="file" id="quizFile">
+	  </div>	  
+    <button class="info-btn" id="quizInfoBtn" title="Txt formatı hakkında bilgi">Bilgi</button>
+    
+    <div id="quizQuestionsList"></div>
+  </div>
+
+  <!-- Generated Code Section -->
+  <div class="section">
+    <h2>Üretilen Program Kodu</h2>
+    <textarea id="outputCode" readonly></textarea>
+    <button id="generateBtn">Üret</button>
+    <button id="saveBtn">Programı Kaydet</button>
+  </div>
+
+  <script>
+    let learningCards = [];
+    let quizQuestions = [];
+
+    /* ========== FLASHCARD (ÖĞREN) SECTION ========== */
+    document.getElementById("addLearningCardBtn").addEventListener("click", function() {
+      const heading = document.getElementById("lcHeading").value.trim();
+      const text = document.getElementById("lcText").value.trim();
+      const detail = document.getElementById("lcDetail").value.trim();
+      
+      // Require at least one field to be filled
+      if (!heading && !text && !detail) {
+        alert("Lütfen en az bir alanı doldurun.");
+        return;
+      }
+      
+      const card = { heading, text, detail };
+      learningCards.push(card);
+      updateLearningCardsList();
+      
+      document.getElementById("lcHeading").value = "";
+      document.getElementById("lcText").value = "";
+      document.getElementById("lcDetail").value = "";
+    });
+    
+    function updateLearningCardsList() {
+      const listDiv = document.getElementById("learningCardsList");
+      listDiv.innerHTML = "<h3>Eklendi (" + learningCards.length + ")</h3>";
+      learningCards.forEach((card, index) => {
+        listDiv.innerHTML += `<div class="item"><strong>${index + 1}. ${card.heading || "(başlıksız)"}</strong></div>`;
+      });
+    }
+    
+    // Flashcard dosyası seçildiğinde otomatik yükle
+	document.getElementById("flashcardFile").addEventListener("change", function () {
+	const file = this.files[0];
+	if (!file) return;
+
+	const reader = new FileReader();
+	reader.onload = function (e) {
+		const content = e.target.result;
+		const blocks = content.split(/\n\s*\n/);
+		blocks.forEach(block => {
+		const lines = block.split('\n');
+		let h = "", t = "", d = "";
+		lines.forEach(line => {
+			if (line.startsWith("h:")) h = line.substring(2).trim();
+			else if (line.startsWith("t:")) t = line.substring(2).trim();
+			else if (line.startsWith("d:")) d = line.substring(2).trim();
+		});
+		if (h || t || d) {
+			learningCards.push({ heading: h, text: t, detail: d });
+		}
+		});
+		updateLearningCardsList();
+		alert("Flashcard dosyası başarıyla yüklendi.");
+	};
+	reader.readAsText(file);
+	});
+    
+    /* Flashcard Info Butonu */
+    document.getElementById("flashcardInfoBtn").addEventListener("click", function() {
+      const info = "Flashcard Txt Dosya Formatı:\n\n" +
+                   "Her kart, boş bir satır ile ayrılmış bloklar halinde olmalıdır.\n" +
+                   "Blok içeriğinde kullanılması gereken ön ekler:\n" +
+                   "  h: Kartın başlığı (h: Başlık Metni)\n" +
+                   "  t: Ana metin (t: Ana Metin)\n" +
+                   "  d: Detay (d: Detay Bilgi Metni)\n\n" +
+                   "Örnek:\n" +
+                   "----------------------\n" +
+                   "h: Başlık Metni\n" +
+                   "t: Ana Metin\n" +
+                   "d: Detay Bilgi Metni\n" +
+				   "\n" +
+				   "h: Başlık Menti\n" +
+                   "t: Ana Metin\n" +
+                   "d: Detay Bilgi Metni\n" +
+				   "\n" +
+				   "h: Başlık Menti\n" +
+                   "t: Ana Metin\n" +
+                   "d: Detay Bilgi Metni\n" +
+				   "\n" +
+                   "----------------------";
+      alert(info);
+    });
+    
+    /* ========== QUIZ SECTION ========== */
+    // Functionality to add extra answer option inputs
+    document.getElementById("addOptionBtn").addEventListener("click", function() {
+      const container = document.getElementById("quizOptionsContainer");
+      const count = container.getElementsByClassName("quizOpt").length + 1;
+      const label = document.createElement("label");
+      label.textContent = "Seçenek " + count + ":";
+      const input = document.createElement("input");
+      input.type = "text";
+      input.className = "quizOpt";
+      input.placeholder = "Cevap Ekle";
+      container.appendChild(label);
+      container.appendChild(input);
+    });
+    
+    document.getElementById("addQuizQuestionBtn").addEventListener("click", function() {
+      const q = document.getElementById("quizQ").value.trim();
+      const optionElements = document.getElementsByClassName("quizOpt");
+      let options = [];
+      for (let el of optionElements) {
+        const val = el.value.trim();
+        if (val) options.push(val);
+      }
+      const correctInput = document.getElementById("quizCorrect").value.trim();
+      if (!q || options.length < 2 || correctInput === "") {
+        alert("Lütfen soru, en az iki seçenek ve doğru cevap indeksini doldurun.");
+        return;
+      }
+      // Convert 1-based index to 0-based.
+      const correctIndex = parseInt(correctInput) - 1;
+      if (isNaN(correctIndex) || correctIndex < 0 || correctIndex > options.length - 1) {
+        alert("Doğru seçenek indeksi mevcut seçenek sayısı içerisinde olmalıdır.");
+        return;
+      }
+      const quizItem = { q: q, options: options, correct: correctIndex };
+      quizQuestions.push(quizItem);
+      updateQuizQuestionsList();
+      
+      document.getElementById("quizQ").value = "";
+      // Clear all option inputs
+      Array.from(optionElements).forEach(el => el.value = "");
+      document.getElementById("quizCorrect").value = "";
+    });
+    
+    function updateQuizQuestionsList() {
+      const listDiv = document.getElementById("quizQuestionsList");
+      listDiv.innerHTML = "<h3>Eklendi (" + quizQuestions.length + ")</h3>";
+      quizQuestions.forEach((q, index) => {
+        listDiv.innerHTML += `<div class="item"><strong>${index + 1}. ${q.q}</strong></div>`;
+      });
+    }
+    
+    // Quiz dosyası seçildiğinde otomatik yükle
+	document.getElementById("quizFile").addEventListener("change", function () {
+	const file = this.files[0];
+	if (!file) return;
+
+	const reader = new FileReader();
+	reader.onload = function (e) {
+	const content = e.target.result;
+	const blocks = content.split(/\n\s*\n/);
+	blocks.forEach(block => {
+	const lines = block.split('\n');
+	let question = "", answers = [], key = "";
+	lines.forEach(line => {
+	if (line.startsWith("q:")) question = line.substring(2).trim();
+	else if (line.startsWith("a:")) answers.push(line.substring(2).trim());
+	else if (line.startsWith("k:")) key = line.substring(2).trim();
+	});
+	if (question && answers.length >= 2 && key) {
+	const correct = parseInt(key) - 1;
+	quizQuestions.push({ q: question, options: answers, correct });
+	}
+	});
+	updateQuizQuestionsList();
+	alert("Quiz dosyası başarıyla yüklendi.");
+	};
+	reader.readAsText(file);
+	});
+
+    
+    /* Quiz Info Butonu */
+    document.getElementById("quizInfoBtn").addEventListener("click", function() {
+      const info = "Quiz Txt Dosya Formatı:\n\n" +
+                   "Her soru, boş bir satır ile ayrılmış bloklar halinde olmalıdır.\n" +
+                   "Blok içeriğinde kullanılması gereken ön ekler:\n" +
+                   "  q: Soru metni (q: Soru Metni)\n" +
+                   "  a: Bir seçenek (a: Seçenek Metni) [istediğiniz kadar seçenek ekleyebilirsiniz]\n" +
+                   "  k: Doğru seçeneğin numarası (ör: k: 1)\n\n" +
+                   "Örnek:\n" +
+                   "----------------------\n" +
+                   	"q: Soru Metni\n" +
+					"a: Seçenek 1 Metni\n" +
+					"a: Seçenek 2 Metni\n" +
+					"a: Seçenek 3 Metni\n" +
+					"a: ...\n" +
+					"k: 1\n" +
+					"\n" +
+					"q: Soru Metni\n" +
+					"a: Seçenek 1 Metni\n" +
+					"a: Seçenek 2 Metni\n" +
+					"a: Seçenek 3 Metni\n" +
+					"a: ...\n" +
+					"k: 3\n" +
+					"\n" +
+                   "----------------------";
+      alert(info);
+    });
+    
+    /* ========== GENERATED CODE SECTION ========== */
+    // We'll store the original quizBox HTML to restore it after finishing the quiz:
+    let originalQuizBoxHTML = `
+      <div class="status-bar" id="statusBarTest"></div>
+      <div class="question" id="questionTest"></div>
+      <div class="options" id="optionsTest"></div>
+      <button id="nextBtnTest" onclick="nextQuestion()">Sonraki Soru</button>
+    `;
+    
+    document.getElementById("generateBtn").addEventListener("click", function() {
+      const programName = document.getElementById("programName").value.trim() || "Program";
+      
+      const output = `<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${programName}</title>
+  <style>
+    /* Genel Stil - Light Mode */
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f6f8;
+      color: #000;
+      margin: 0;
+      padding: 40px 20px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    /* Ana Menü başlığı pastel mavi highlight */
+    #menu h1 {
+      color: #000; 
+      background-color: #b3e5fc;
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    /* Kart başlığında pastel mavi highlight + bigger text */
+    .card h2 {
+      color: #000;
+      background-color: #b3e5fc;
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 4px;
+      margin: 0 0 10px 0;
+      transition: background-color 0.3s, color 0.3s;
+      font-size: 22px;
+    }
+    /* Make the main text a bit smaller than the heading */
+    .card .text {
+      font-size: 18px;
+      margin-bottom: 10px;
+      color: #333;
+    }
+    .card .detail {
+      font-size: 16px;
+      line-height: 1.5;
+      color: #555;
+    }
+    button {
+      cursor: pointer;
+      border: none;
+      border-radius: 6px;
+      transition: background-color 0.3s, color 0.3s, font-size 0.3s, padding 0.3s;
+    }
+    /* Ana Menü */
+    #menu {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    #menu button {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 18px;
+      background-color: #b3e5fc;
+      color: #000;
+    }
+    /* Dark Mode Toggle (sağ üst) */
+    #darkModeToggle {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      padding: 6px 12px;
+      font-size: 14px;
+      background-color: #b3e5fc;
+      color: #000;
+      border-radius: 4px;
+      z-index: 1000;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    /* Ana Menüye Dön Butonu (sol üst) */
+    #backToMenuBtn {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      padding: 6px 12px;
+      font-size: 14px;
+      background-color: #b3e5fc;
+      color: #000;
+      border-radius: 4px;
+      z-index: 1000;
+      display: none;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    /* Öğren (Flashcard) Bölümü */
+    #learnSection {
+      display: none;
+      min-height: 100vh;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    #cardCountDisplay {
+      font-size: 16px;
+      color: #000;
+      margin-bottom: 10px;
+      transition: color 0.3s;
+    }
+    .card {
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      max-width: 800px;
+      width: 90%;
+      padding: 20px 30px;
+      margin-bottom: 20px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .button-group {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    /* Order changed: Normal Sıra, Random Sıra, Sonraki Kart */
+    #learnSection button {
+      background-color: #b3e5fc;
+      color: #000;
+      margin: 5px;
+      padding: 10px 16px;
+      font-size: 16px;
+    }
+    /* Test (Quiz) Bölümü */
+    #testSection {
+      display: none;
+      min-height: 100vh;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .quiz-box {
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      max-width: 700px;
+      width: 90%;
+      padding: 20px 30px;
+      text-align: center;
+      margin-bottom: 20px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .status-bar {
+      font-size: 15px;
+      color: #333;
+      margin-bottom: 10px;
+      transition: color 0.3s;
+    }
+    .question {
+      font-size: 18px;
+      font-weight: bold;
+      color: #000;
+      margin-bottom: 15px;
+      transition: color 0.3s;
+    }
+    .options button {
+      display: block;
+      width: 100%;
+      margin: 8px 0;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      background-color: #f9f9f9;
+      color: #000;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .options button.correct {
+      background-color: #c8e6c9 !important;
+    }
+    .options button.wrong {
+      background-color: #ffcdd2 !important;
+    }
+    /* Updated Test Mode Button Padding */
+    #testSection button {
+      background-color: #b3e5fc;
+      color: #000;
+      margin: 5px;
+      padding: 10px 16px;
+      font-size: 16px;
+    }
+    .button-group-test {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    /* Dark Mode (we re-use the class "dark-mode" for toggling) */
+    .dark-mode {
+      background-color: #121212;
+      color: #fff;
+    }
+    .dark-mode #menu h1 {
+      background-color: #333 !important;
+      color: #fff !important;
+    }
+    .dark-mode .card, .dark-mode .quiz-box {
+      background-color: #1e1e1e !important;
+      color: #fff !important;
+    }
+    .dark-mode button {
+      background-color: #444 !important;
+      color: #fff !important;
+    }
+    .dark-mode .question {
+      color: #fff !important;
+    }
+    .dark-mode .status-bar {
+      color: #ccc !important;
+    }
+    .dark-mode .text {
+      color: #ccc !important;
+    }
+    .dark-mode .detail {
+      color: #bbb !important;
+    }
+    .dark-mode .options button {
+      background-color: #2e2e2e !important;
+      color: #fff !important;
+      border: 1px solid #555 !important;
+    }
+    .dark-mode .options button.correct {
+      background-color: #c8e6c9 !important;
+      color: #000 !important;
+    }
+    .dark-mode .options button.wrong {
+      background-color: #ffcdd2 !important;
+      color: #000 !important;
+    }
+    /* Updated Dark Mode Headings and Number Display */
+    .dark-mode .card h2 {
+      background-color: #333 !important;
+      color: #fff !important;
+    }
+    .dark-mode #cardCountDisplay {
+      color: #fff !important;
+    }
+  </style>
+</head>
+<body class="dark-mode">
+  <button id="darkModeToggle">Koyu Mod</button>
+  <button id="backToMenuBtn">Ana Menüye Dön</button>
+  <div id="menu">
+    <h1>${programName}</h1>
+    <button id="learnBtn">Öğren</button>
+    <button id="testBtn">Test Et</button>
+  </div>
+  <div id="learnSection">
+    <div id="cardCountDisplay"></div>
+    <div class="card" id="flashcard">
+      <h2 id="flashHeading"></h2>
+      <div class="text" id="flashText"></div>
+      <div class="detail" id="flashDetail"></div>
+    </div>
+    <!-- Button order: Normal Sıra, Random Sıra, Sonraki Kart -->
+    <div class="button-group">
+      <button id="normalOrderBtn">Normal Sıra</button>
+      <button id="randomOrderBtn">Random Sıra</button>
+      <button id="nextCardBtn">Sonraki Kart</button>
+    </div>
+  </div>
+  <div id="testSection">
+    <div class="quiz-box" id="quizBox">
+      <div class="status-bar" id="statusBarTest"></div>
+      <div class="question" id="questionTest"></div>
+      <div class="options" id="optionsTest"></div>
+      <button id="nextBtnTest" onclick="nextQuestion()">Sonraki Soru</button>
+    </div>
+    <div class="button-group-test">
+      <button id="randomTestOrderBtn">Random Sıra</button>
+      <button id="normalTestOrderBtn">Normal Sıra</button>
+    </div>
+  <\/div>
+  <script>
+    // We store the flashcards & quiz data:
+    const flashcards = ${JSON.stringify(learningCards, null, 2)};
+    const quiz = ${JSON.stringify(quizQuestions, null, 2)};
+    
+    // Shuffle helper
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+    
+    // FLASHCARD LOGIC
+    let flashcardsOrder = [];
+    let currentFlashcard = 0;
+    function startFlashcards() {
+      if (flashcards.length === 0) {
+        alert("Flashcard yok!");
+        return;
+      }
+      flashcardsOrder = shuffle([...Array(flashcards.length).keys()]);
+      currentFlashcard = 0;
+      showFlashcard(currentFlashcard);
+    }
+    function showFlashcard(index) {
+      const card = flashcards[flashcardsOrder[index]];
+      document.getElementById("flashHeading").textContent = card.heading || "";
+      document.getElementById("flashText").textContent = card.text || "";
+      document.getElementById("flashDetail").textContent = card.detail || "";
+      document.getElementById("cardCountDisplay").textContent = \`Kart \${currentFlashcard + 1} / \${flashcards.length}\`;
+    }
+    document.getElementById("nextCardBtn").addEventListener("click", function() {
+      currentFlashcard++;
+      if (currentFlashcard < flashcardsOrder.length) {
+        showFlashcard(currentFlashcard);
+      } else {
+        alert("Tüm kartları gördünüz. Ana menüye dönün veya tekrar başlayın.");
+      }
+    });
+    document.getElementById("randomOrderBtn").addEventListener("click", function(){
+      flashcardsOrder = shuffle([...Array(flashcards.length).keys()]);
+      currentFlashcard = 0;
+      showFlashcard(currentFlashcard);
+    });
+    document.getElementById("normalOrderBtn").addEventListener("click", function(){
+      flashcardsOrder = [...Array(flashcards.length).keys()];
+      currentFlashcard = 0;
+      showFlashcard(currentFlashcard);
+    });
+    
+    // QUIZ LOGIC
+    let quizOrder = [];
+    let currentQuiz = 0;
+    let correctCountQuiz = 0;
+    let incorrectCountQuiz = 0;
+    let currentOptionOrder = [];
+    
+    function startQuiz() {
+      if (quiz.length === 0) {
+        alert("Quiz sorusu yok!");
+        return;
+      }
+      quizOrder = shuffle([...Array(quiz.length).keys()]);
+      currentQuiz = 0;
+      correctCountQuiz = 0;
+      incorrectCountQuiz = 0;
+      // Restore original quizBox HTML so nextQuestion() etc. work again
+      document.getElementById("quizBox").innerHTML = \`${originalQuizBoxHTML}\`;
+      loadQuestion();
+      // re-bind the nextBtnTest onclick if needed
+      document.getElementById("nextBtnTest").onclick = nextQuestion;
+    }
+    
+    function loadQuestion() {
+      const q = quiz[quizOrder[currentQuiz]];
+      document.getElementById("questionTest").textContent = q.q;
+      const optionsDiv = document.getElementById("optionsTest");
+      optionsDiv.innerHTML = "";
+      currentOptionOrder = shuffle([...Array(q.options.length).keys()]);
+      currentOptionOrder.forEach(randIndex => {
+        const btn = document.createElement("button");
+        btn.textContent = q.options[randIndex];
+        btn.onclick = () => checkAnswer(btn, randIndex);
+        optionsDiv.appendChild(btn);
+      });
+      document.getElementById("nextBtnTest").style.display = "none";
+      updateStatusTest();
+    }
+    
+    function updateStatusTest() {
+      const statusBar = document.getElementById("statusBarTest");
+      statusBar.textContent = \`Soru \${currentQuiz + 1} / \${quiz.length} | Doğru: \${correctCountQuiz} | Yanlış: \${incorrectCountQuiz}\`;
+    }
+    
+    function checkAnswer(button, chosenIndex) {
+      const q = quiz[quizOrder[currentQuiz]];
+      const correct = q.correct;
+      const buttons = document.querySelectorAll("#optionsTest button");
+      buttons.forEach((btn, i) => {
+        btn.disabled = true;
+        if (currentOptionOrder[i] === correct) {
+          btn.classList.add("correct");
+        }
+        if (currentOptionOrder[i] === chosenIndex && chosenIndex !== correct) {
+          btn.classList.add("wrong");
+        }
+      });
+      if (chosenIndex === correct) {
+        correctCountQuiz++;
+      } else {
+        incorrectCountQuiz++;
+      }
+      updateStatusTest();
+      document.getElementById("nextBtnTest").style.display = "inline-block";
+    }
+    
+    function nextQuestion() {
+      currentQuiz++;
+      if (currentQuiz < quizOrder.length) {
+        loadQuestion();
+      } else {
+        document.getElementById("quizBox").innerHTML = \`
+          <h2>Test tamamlandı!</h2>
+          <p>Toplam Soru: \${quiz.length}</p>
+          <p>Doğru: \${correctCountQuiz}</p>
+          <p>Yanlış: \${incorrectCountQuiz}</p>
+        \`;
+      }
+    }
+    
+    // Buttons to randomize or normal order mid-quiz
+    document.getElementById("randomTestOrderBtn").addEventListener("click", function(){
+      quizOrder = shuffle([...Array(quiz.length).keys()]);
+      currentQuiz = 0;
+      correctCountQuiz = 0;
+      incorrectCountQuiz = 0;
+      document.getElementById("quizBox").innerHTML = \`${originalQuizBoxHTML}\`;
+      loadQuestion();
+      document.getElementById("nextBtnTest").onclick = nextQuestion;
+    });
+    document.getElementById("normalTestOrderBtn").addEventListener("click", function(){
+      quizOrder = [...Array(quiz.length).keys()];
+      currentQuiz = 0;
+      correctCountQuiz = 0;
+      incorrectCountQuiz = 0;
+      document.getElementById("quizBox").innerHTML = \`${originalQuizBoxHTML}\`;
+      loadQuestion();
+      document.getElementById("nextBtnTest").onclick = nextQuestion;
+    });
+    
+    // MENU AND DARK MODE
+    const darkModeToggle = document.getElementById("darkModeToggle");
+    darkModeToggle.addEventListener("click", function() {
+      document.body.classList.toggle("dark-mode");
+      darkModeToggle.textContent = document.body.classList.contains("dark-mode") ? "Açık Mod" : "Koyu Mod";
+    });
+    const backToMenuBtn = document.getElementById("backToMenuBtn");
+    backToMenuBtn.addEventListener("click", showMenu);
+    document.getElementById("learnBtn").addEventListener("click", showLearn);
+    document.getElementById("testBtn").addEventListener("click", showTest);
+    
+    function showMenu() {
+      document.getElementById("menu").style.display = "flex";
+      document.getElementById("learnSection").style.display = "none";
+      document.getElementById("testSection").style.display = "none";
+      backToMenuBtn.style.display = "none";
+    }
+    function showLearn() {
+      document.getElementById("menu").style.display = "none";
+      document.getElementById("learnSection").style.display = "flex";
+      document.getElementById("testSection").style.display = "none";
+      backToMenuBtn.style.display = "block";
+      startFlashcards();
+    }
+    function showTest() {
+      document.getElementById("menu").style.display = "none";
+      document.getElementById("learnSection").style.display = "none";
+      document.getElementById("testSection").style.display = "flex";
+      backToMenuBtn.style.display = "block";
+      startQuiz();
+    }
+  <\/script>
+</body>
+</html>`;
+      
+      document.getElementById("outputCode").value = output;
+    });
+	
+    /* Save as HTML: Download the generated code as an HTML file */
+    document.getElementById("saveBtn").addEventListener("click", function() {
+      const code = document.getElementById("outputCode").value;
+      const filename = (document.getElementById("programName").value.trim() || "program") + ".html";
+      const element = document.createElement("a");
+      element.setAttribute("href", "data:text/html;charset=utf-8," + encodeURIComponent(code));
+      element.setAttribute("download", filename);
+      element.style.display = "none";
+      document.body.appendChild(element);
+      element.click();
+      document.body.removeChild(element);
+    });
+  </script>
+</body>
+</html>
