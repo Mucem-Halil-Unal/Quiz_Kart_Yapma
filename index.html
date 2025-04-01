@@ -8,11 +8,11 @@
     /* Global Dark Theme & Modern UI */
     body {
       font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-	  background-color: #121212;
-	  background-image:
-		repeating-linear-gradient(45deg, #1a1a1a 0, #1a1a1a 2px, #121212 2px, #121212 4px),
-		repeating-linear-gradient(-45deg, #1a1a1a 0, #1a1a1a 2px, #121212 2px, #121212 4px);
-       color: #e0e0e0;
+      background-color: #121212;
+      background-image:
+        repeating-linear-gradient(45deg, #1a1a1a 0, #1a1a1a 2px, #121212 2px, #121212 4px),
+        repeating-linear-gradient(-45deg, #1a1a1a 0, #1a1a1a 2px, #121212 2px, #121212 4px);
+      color: #e0e0e0;
       padding: 20px;
       margin: 0;
       transition: background-color 0.3s, color 0.3s;
@@ -20,9 +20,9 @@
     h1 {
       color: lightgray;
       margin: 0 0 10px;
-	  text-align: center;
+      text-align: center;
     }
-	h2 {
+    h2 {
       color: lightgray;
       margin: 0 0 10px;
     }
@@ -56,13 +56,13 @@
       background-color: #555;
     }
     .section {
-    max-width: 600px;
-    margin: 20px auto; 
-    padding: 15px;
-    background-color: #1e1e1e;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.5);
-    border-radius: 4px;
-  }
+      max-width: 600px;
+      margin: 20px auto; 
+      padding: 15px;
+      background-color: #1e1e1e;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+      border-radius: 4px;
+    }
     .item {
       border-bottom: 1px solid #333;
       margin-top: 10px;
@@ -100,39 +100,59 @@
     .info-btn:hover {
       background-color: #555;
     }
-
-	input[type="file"] {
-	display: none;
-	}
-
-	.file-upload-wrapper {
-	display: inline-block;
-	position: relative;
-	}
-
-	.file-upload-label {
-	display: inline-block;
-	margin-top: 10px;
-	padding: 10px 20px;
-	background-color: #333;
-	color: #fff;
-	border-radius: 20px;
-	cursor: pointer;
-	font-size: 16px;
-	transition: background-color 0.3s;
-	}
-	.file-upload-label:hover {
-	background-color: #555;
-	}
-
+    input[type="file"] {
+      display: none;
+    }
+    .file-upload-wrapper {
+      display: inline-block;
+      position: relative;
+    }
+    .file-upload-label {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 10px 20px;
+      background-color: #333;
+      color: #fff;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s;
+    }
+    .file-upload-label:hover {
+      background-color: #555;
+    }
+    .promo-box {
+      border: 1px solid #333;
+      padding: 15px;
+      margin: 20px auto;
+      max-width: 600px;
+      background-color: #1e1e1e;
+      border-radius: 4px;
+      color: #e0e0e0;
+      text-align: center;
+    }
+    .promo-box a {
+      color: #b3e5fc;  /* Pastel blue color */
+      text-decoration: none;
+    }
+    .promo-box a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
   <h1>Kart & Quiz Oluşturucu</h1>
   
-  <!-- Program Settings -->
+  <!-- Promo Info Box -->
+  <div class="promo-box">
+    <p>
+    Bu programı yapay zeka ile birlikte en faydalı nasıl kullanacağınıza dair şu <a href="VideoLink" target="_blank">videoyu</a> izleyebilirsiniz. Videoda hem ücretsiz hem ücretli yapay zekalardan bahsedilecektir. Eğer "Chat Gpt Plus" üyeliğiniz varsa şu <a href="https://chatgpt.com/g/g-67e7636ea8d481919d2b23e05253c669-zihin-saray-mnemonik-ogrenme-kartlari-ve-quizler" target="_blank">GPT'yi</a> kullanarak akılda kolay kalmasını sağlayan kodlamalı kart metinlerini daha hızlı oluşturabilirsiniz bedava yapay zekalarda aynısı mümkün detaylı kullanım kılavzu videoda.
+    </p>
+  </div>
+  
+  <!-- Program Name -->
   <div class="section">
-	<h2>Program Adı</h2>
+    <h2>Program Adı</h2>
     <input type="text" id="programName" placeholder="Programa İsim Ver.">
   </div>
 
@@ -146,17 +166,22 @@
     <input type="text" id="lcText" placeholder="Ana Metin Ekle.">
     
     <label for="lcDetail">Detay:</label>
-    <input id="lcDetail" placeholder="Detay Metni Ekle."></textarea>
+    <input id="lcDetail" placeholder="Detay Metni Ekle.">
     
     <button id="addLearningCardBtn">Öğrenme Kartını Ekle</button>
     
     <!-- Bulk loader for flashcards -->
     <label for="flashcardFile">Txt Dosyasından Toplu Kart Yükle:</label>
     <div class="file-upload-wrapper">
-		<label for="flashcardFile" class="file-upload-label">Dosya Seç</label>
-		<input type="file" id="flashcardFile">
-	  </div>	  
+      <label for="flashcardFile" class="file-upload-label">Dosya Seç</label>
+      <input type="file" id="flashcardFile">
+    </div>	  
     <button class="info-btn" id="flashcardInfoBtn" title="Txt formatı hakkında bilgi">Bilgi</button>
+    
+    <!-- New bulk text area for flashcards -->
+    <p>İstersen buraya metni yapıştırıp topluca yükleyebilirsin.</p>
+    <textarea id="flashcardTextBulk" style="height: 100px;"></textarea>
+    <button class="file-upload-label" id="flashcardTextLoadBtn">Txt Yükle</button>
     
     <div id="learningCardsList"></div>
   </div>
@@ -190,10 +215,15 @@
     <!-- Bulk loader for quizzes -->
     <label for="quizFile">Txt Dosyasından Toplu Quiz Yükle:</label>
     <div class="file-upload-wrapper">
-		<label for="quizFile" class="file-upload-label">Dosya Seç</label>
-		<input type="file" id="quizFile">
-	  </div>	  
+      <label for="quizFile" class="file-upload-label">Dosya Seç</label>
+      <input type="file" id="quizFile">
+    </div>	  
     <button class="info-btn" id="quizInfoBtn" title="Txt formatı hakkında bilgi">Bilgi</button>
+    
+    <!-- New bulk text area for quizzes -->
+    <p>İstersen buraya metni yapıştırıp topluca yükleyebilirsin.</p>
+    <textarea id="quizTextBulk" style="height: 100px;"></textarea>
+    <button class="file-upload-label" id="quizTextLoadBtn">Txt Yükle</button>
     
     <div id="quizQuestionsList"></div>
   </div>
@@ -239,34 +269,33 @@
       });
     }
     
-    // Flashcard dosyası seçildiğinde otomatik yükle
-	document.getElementById("flashcardFile").addEventListener("change", function () {
-	const file = this.files[0];
-	if (!file) return;
-
-	const reader = new FileReader();
-	reader.onload = function (e) {
-		const content = e.target.result;
-		const blocks = content.split(/\n\s*\n/);
-		blocks.forEach(block => {
-		const lines = block.split('\n');
-		let h = "", t = "", d = "";
-		lines.forEach(line => {
-			if (line.startsWith("h:")) h = line.substring(2).trim();
-			else if (line.startsWith("t:")) t = line.substring(2).trim();
-			else if (line.startsWith("d:")) d = line.substring(2).trim();
-		});
-		if (h || t || d) {
-			learningCards.push({ heading: h, text: t, detail: d });
-		}
-		});
-		updateLearningCardsList();
-		alert("Flashcard dosyası başarıyla yüklendi.");
-	};
-	reader.readAsText(file);
-	});
+    // Flashcard file upload
+    document.getElementById("flashcardFile").addEventListener("change", function () {
+      const file = this.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const content = e.target.result;
+        const blocks = content.split(/\n\s*\n/);
+        blocks.forEach(block => {
+          const lines = block.split('\n');
+          let h = "", t = "", d = "";
+          lines.forEach(line => {
+            if (line.startsWith("h:")) h = line.substring(2).trim();
+            else if (line.startsWith("t:")) t = line.substring(2).trim();
+            else if (line.startsWith("d:")) d = line.substring(2).trim();
+          });
+          if (h || t || d) {
+            learningCards.push({ heading: h, text: t, detail: d });
+          }
+        });
+        updateLearningCardsList();
+        alert("Flashcard dosyası başarıyla yüklendi.");
+      };
+      reader.readAsText(file);
+    });
     
-    /* Flashcard Info Butonu */
+    // Flashcard Info Butonu
     document.getElementById("flashcardInfoBtn").addEventListener("click", function() {
       const info = "Flashcard Txt Dosya Formatı:\n\n" +
                    "Her kart, boş bir satır ile ayrılmış bloklar halinde olmalıdır.\n" +
@@ -279,17 +308,40 @@
                    "h: Başlık Metni\n" +
                    "t: Ana Metin\n" +
                    "d: Detay Bilgi Metni\n" +
-				   "\n" +
-				   "h: Başlık Menti\n" +
+                   "\n" +
+                   "h: Başlık Menti\n" +
                    "t: Ana Metin\n" +
                    "d: Detay Bilgi Metni\n" +
-				   "\n" +
-				   "h: Başlık Menti\n" +
+                   "\n" +
+                   "h: Başlık Menti\n" +
                    "t: Ana Metin\n" +
                    "d: Detay Bilgi Metni\n" +
-				   "\n" +
                    "----------------------";
       alert(info);
+    });
+    
+    // New Flashcard bulk text loader
+    document.getElementById("flashcardTextLoadBtn").addEventListener("click", function() {
+      const content = document.getElementById("flashcardTextBulk").value;
+      if (!content.trim()) {
+        alert("Lütfen metin yapıştırın.");
+        return;
+      }
+      const blocks = content.split(/\n\s*\n/);
+      blocks.forEach(block => {
+        const lines = block.split('\n');
+        let h = "", t = "", d = "";
+        lines.forEach(line => {
+          if (line.startsWith("h:")) h = line.substring(2).trim();
+          else if (line.startsWith("t:")) t = line.substring(2).trim();
+          else if (line.startsWith("d:")) d = line.substring(2).trim();
+        });
+        if (h || t || d) {
+          learningCards.push({ heading: h, text: t, detail: d });
+        }
+      });
+      updateLearningCardsList();
+      alert("Flashcard txt başarıyla yüklendi.");
     });
     
     /* ========== QUIZ SECTION ========== */
@@ -344,36 +396,34 @@
       });
     }
     
-    // Quiz dosyası seçildiğinde otomatik yükle
-	document.getElementById("quizFile").addEventListener("change", function () {
-	const file = this.files[0];
-	if (!file) return;
-
-	const reader = new FileReader();
-	reader.onload = function (e) {
-	const content = e.target.result;
-	const blocks = content.split(/\n\s*\n/);
-	blocks.forEach(block => {
-	const lines = block.split('\n');
-	let question = "", answers = [], key = "";
-	lines.forEach(line => {
-	if (line.startsWith("q:")) question = line.substring(2).trim();
-	else if (line.startsWith("a:")) answers.push(line.substring(2).trim());
-	else if (line.startsWith("k:")) key = line.substring(2).trim();
-	});
-	if (question && answers.length >= 2 && key) {
-	const correct = parseInt(key) - 1;
-	quizQuestions.push({ q: question, options: answers, correct });
-	}
-	});
-	updateQuizQuestionsList();
-	alert("Quiz dosyası başarıyla yüklendi.");
-	};
-	reader.readAsText(file);
-	});
-
+    // Quiz file upload
+    document.getElementById("quizFile").addEventListener("change", function () {
+      const file = this.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const content = e.target.result;
+        const blocks = content.split(/\n\s*\n/);
+        blocks.forEach(block => {
+          const lines = block.split('\n');
+          let question = "", answers = [], key = "";
+          lines.forEach(line => {
+            if (line.startsWith("q:")) question = line.substring(2).trim();
+            else if (line.startsWith("a:")) answers.push(line.substring(2).trim());
+            else if (line.startsWith("k:")) key = line.substring(2).trim();
+          });
+          if (question && answers.length >= 2 && key) {
+            const correct = parseInt(key) - 1;
+            quizQuestions.push({ q: question, options: answers, correct });
+          }
+        });
+        updateQuizQuestionsList();
+        alert("Quiz dosyası başarıyla yüklendi.");
+      };
+      reader.readAsText(file);
+    });
     
-    /* Quiz Info Butonu */
+    // Quiz Info Butonu
     document.getElementById("quizInfoBtn").addEventListener("click", function() {
       const info = "Quiz Txt Dosya Formatı:\n\n" +
                    "Her soru, boş bir satır ile ayrılmış bloklar halinde olmalıdır.\n" +
@@ -383,22 +433,46 @@
                    "  k: Doğru seçeneğin numarası (ör: k: 1)\n\n" +
                    "Örnek:\n" +
                    "----------------------\n" +
-                   	"q: Soru Metni\n" +
-					"a: Seçenek 1 Metni\n" +
-					"a: Seçenek 2 Metni\n" +
-					"a: Seçenek 3 Metni\n" +
-					"a: ...\n" +
-					"k: 1\n" +
-					"\n" +
-					"q: Soru Metni\n" +
-					"a: Seçenek 1 Metni\n" +
-					"a: Seçenek 2 Metni\n" +
-					"a: Seçenek 3 Metni\n" +
-					"a: ...\n" +
-					"k: 3\n" +
-					"\n" +
+                   "q: Soru Metni\n" +
+                   "a: Seçenek 1 Metni\n" +
+                   "a: Seçenek 2 Metni\n" +
+                   "a: Seçenek 3 Metni\n" +
+                   "a: ...\n" +
+                   "k: 1\n" +
+                   "\n" +
+                   "q: Soru Metni\n" +
+                   "a: Seçenek 1 Metni\n" +
+                   "a: Seçenek 2 Metni\n" +
+                   "a: Seçenek 3 Metni\n" +
+                   "a: ...\n" +
+                   "k: 3\n" +
                    "----------------------";
       alert(info);
+    });
+    
+    // New Quiz bulk text loader
+    document.getElementById("quizTextLoadBtn").addEventListener("click", function() {
+      const content = document.getElementById("quizTextBulk").value;
+      if (!content.trim()) {
+        alert("Lütfen metin yapıştırın.");
+        return;
+      }
+      const blocks = content.split(/\n\s*\n/);
+      blocks.forEach(block => {
+        const lines = block.split('\n');
+        let question = "", answers = [], key = "";
+        lines.forEach(line => {
+          if (line.startsWith("q:")) question = line.substring(2).trim();
+          else if (line.startsWith("a:")) answers.push(line.substring(2).trim());
+          else if (line.startsWith("k:")) key = line.substring(2).trim();
+        });
+        if (question && answers.length >= 2 && key) {
+          const correct = parseInt(key) - 1;
+          quizQuestions.push({ q: question, options: answers, correct });
+        }
+      });
+      updateQuizQuestionsList();
+      alert("Quiz txt başarıyla yüklendi.");
     });
     
     /* ========== GENERATED CODE SECTION ========== */
@@ -508,6 +582,23 @@
       z-index: 1000;
       display: none;
       transition: background-color 0.3s, color 0.3s;
+    }
+    /* Yeni: Text Size Slider (gizli menülerde görünür) */
+    #textSizeSliderContainer {
+      position: fixed;
+      top: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 300px;
+      display: none;
+      z-index: 1000;
+    }
+    #textSizeSliderContainer input[type="range"] {
+      width: 100%;
+      accent-color: #b3e5fc;
+    }
+    .dark-mode #textSizeSliderContainer input[type="range"] {
+      accent-color: #444;
     }
     /* Öğren (Flashcard) Bölümü */
     #learnSection {
@@ -658,7 +749,6 @@
       background-color: #ffcdd2 !important;
       color: #000 !important;
     }
-    /* Updated Dark Mode Headings and Number Display */
     .dark-mode .card h2 {
       background-color: #333 !important;
       color: #fff !important;
@@ -671,6 +761,9 @@
 <body class="dark-mode">
   <button id="darkModeToggle">Koyu Mod</button>
   <button id="backToMenuBtn">Ana Menüye Dön</button>
+  <div id="textSizeSliderContainer">
+	<input type="range" id="textSizeSlider" min="0" max="100" value="0">
+  </div>
   <div id="menu">
     <h1>${programName}</h1>
     <button id="learnBtn">Öğren</button>
@@ -683,7 +776,6 @@
       <div class="text" id="flashText"></div>
       <div class="detail" id="flashDetail"></div>
     </div>
-    <!-- Button order: Normal Sıra, Random Sıra, Sonraki Kart -->
     <div class="button-group">
       <button id="normalOrderBtn">Normal Sıra</button>
       <button id="randomOrderBtn">Random Sıra</button>
@@ -770,10 +862,9 @@
       currentQuiz = 0;
       correctCountQuiz = 0;
       incorrectCountQuiz = 0;
-      // Restore original quizBox HTML so nextQuestion() etc. work again
       document.getElementById("quizBox").innerHTML = \`${originalQuizBoxHTML}\`;
-      loadQuestion();
-      // re-bind the nextBtnTest onclick if needed
+      updateTextSizes();
+	  loadQuestion();
       document.getElementById("nextBtnTest").onclick = nextQuestion;
     }
     
@@ -791,6 +882,7 @@
       });
       document.getElementById("nextBtnTest").style.display = "none";
       updateStatusTest();
+	  updateTextSizes();
     }
     
     function updateStatusTest() {
@@ -854,6 +946,25 @@
       document.getElementById("nextBtnTest").onclick = nextQuestion;
     });
     
+    // NEW: Text Size Slider functionality
+    function updateTextSizes() {
+	  const scale = 1 + document.getElementById("textSizeSlider").value / 100;
+      const flashHeading = document.getElementById("flashHeading");
+      const flashText = document.getElementById("flashText");
+      const flashDetail = document.getElementById("flashDetail");
+      const cardCountDisplay = document.getElementById("cardCountDisplay");
+      if (flashHeading) flashHeading.style.fontSize = (22 * scale) + "px";
+      if (flashText) flashText.style.fontSize = (18 * scale) + "px";
+      if (flashDetail) flashDetail.style.fontSize = (16 * scale) + "px";
+      if (cardCountDisplay) cardCountDisplay.style.fontSize = (16 * scale) + "px";
+      const questionTest = document.getElementById("questionTest");
+      if (questionTest) questionTest.style.fontSize = (18 * scale) + "px";
+	  document.querySelectorAll(".options button").forEach(btn => {
+		btn.style.fontSize = (16 * scale) + "px";
+		});
+    }
+    document.getElementById("textSizeSlider").addEventListener("input", updateTextSizes);
+    
     // MENU AND DARK MODE
     const darkModeToggle = document.getElementById("darkModeToggle");
     darkModeToggle.addEventListener("click", function() {
@@ -870,12 +981,14 @@
       document.getElementById("learnSection").style.display = "none";
       document.getElementById("testSection").style.display = "none";
       backToMenuBtn.style.display = "none";
+      document.getElementById("textSizeSliderContainer").style.display = "none";
     }
     function showLearn() {
       document.getElementById("menu").style.display = "none";
       document.getElementById("learnSection").style.display = "flex";
       document.getElementById("testSection").style.display = "none";
       backToMenuBtn.style.display = "block";
+      document.getElementById("textSizeSliderContainer").style.display = "block";
       startFlashcards();
     }
     function showTest() {
@@ -883,6 +996,7 @@
       document.getElementById("learnSection").style.display = "none";
       document.getElementById("testSection").style.display = "flex";
       backToMenuBtn.style.display = "block";
+      document.getElementById("textSizeSliderContainer").style.display = "block";
       startQuiz();
     }
   <\/script>
@@ -891,7 +1005,7 @@
       
       document.getElementById("outputCode").value = output;
     });
-	
+    
     /* Save as HTML: Download the generated code as an HTML file */
     document.getElementById("saveBtn").addEventListener("click", function() {
       const code = document.getElementById("outputCode").value;
